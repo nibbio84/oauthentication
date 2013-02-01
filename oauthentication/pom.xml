@@ -4,11 +4,19 @@
 
 	<groupId>it.nerdammer</groupId>
 	<artifactId>oauthentication</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>oauth</name>
+	<name>oAuthentication</name>
+	<description>Yet another API providing oAuth authentication in Java EE</description>
 	<url>http://www.nerdammer.it/oauthentication</url>
+	<licenses>
+		<license>
+	      <name>The MIT License</name>
+	      <url>http://www.opensource.org/licenses/mit-license.php</url>
+	      <distribution>repo</distribution>
+	    </license>    
+	</licenses>
 	
 	<scm>
 		<connection>scm:svn:http://oauthentication.googlecode.com/svn/trunk/</connection>
@@ -16,10 +24,24 @@
 		<url>http://oauthentication.googlecode.com/svn/trunk/</url>
 	</scm>
 	
+	<developers>
+	    <developer>
+	        <id>nibbio84</id>
+	        <email>nibbio84@gmail.com</email>
+	        <name>Nicola Ferraro</name>
+	    </developer>
+	</developers>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+  	
 	<dependencies>
 		<!-- Test -->
 		<dependency>
