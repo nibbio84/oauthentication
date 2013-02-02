@@ -18,9 +18,9 @@
 	</licenses>
 	
 	<scm>
-		<connection>scm:svn:http://oauthentication.googlecode.com/svn/trunk/</connection>
-		<developerConnection>scm:svn:https://oauthentication.googlecode.com/svn/trunk/</developerConnection>
-		<url>http://oauthentication.googlecode.com/svn/trunk/</url>
+		<connection>scm:svn:http://oauthentication.googlecode.com/svn/trunk/oauthentication/</connection>
+		<developerConnection>scm:svn:https://oauthentication.googlecode.com/svn/trunk/oauthentication/</developerConnection>
+		<url>http://oauthentication.googlecode.com/svn/trunk/oauthentication/</url>
 	</scm>
 	
 	<developers>
