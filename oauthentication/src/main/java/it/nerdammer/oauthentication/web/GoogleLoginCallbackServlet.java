@@ -67,7 +67,7 @@ public class GoogleLoginCallbackServlet extends HttpServlet {
 		String clientSecret = config.getGoogleClientSecret();
 		
 		// Build login callback
-		String loginCallback = CommonUtils.buildCompleteUrl(req, "/nibbiooauth/google_login_callback");
+		String loginCallback = CommonUtils.buildCompleteUrl(req, "/oauthentication/google_login_callback");
 		
 		if(clientId==null || clientSecret==null)
 			throw new IllegalStateException("Google config not set");
