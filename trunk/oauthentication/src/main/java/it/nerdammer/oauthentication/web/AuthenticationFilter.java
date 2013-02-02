@@ -39,7 +39,7 @@ public class AuthenticationFilter implements Filter {
 		CommonUtils.putRequestedUrlInSession(session, url);
 		
 		// User not authenticated
-		req.getRequestDispatcher("/nibbiooauth/login").forward(req, res);
+		req.getRequestDispatcher("/oauthentication/login").forward(req, res);
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -88,7 +88,7 @@ public class AuthenticationFilter implements Filter {
 		config.setGoogleClientSecret(googleClientSecret);
 		
 		CommonUtils.setConfig(config);
-		Logger.getAnonymousLogger().info("NibbioOauth configuration initialized");
+		Logger.getAnonymousLogger().info("oAuthentication configuration initialized");
 	}
 	
 	protected static String getParameter(String param, FilterConfig config, boolean mandatory) {

@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 			req.getSession(true).setAttribute("it.nerdammer.oauthentication.FACEBOOK_STATE", state);
 		
 			// Build login callback
-			String loginCallback = CommonUtils.buildCompleteUrl(req, "/nibbiooauth/facebook_login_callback");
+			String loginCallback = CommonUtils.buildCompleteUrl(req, "/oauthentication/facebook_login_callback");
 			
 			res.sendRedirect("https://www.facebook.com/dialog/oauth?" +
 				"client_id=" + URLEncoder.encode(appID, "UTF-8") +
@@ -62,7 +62,7 @@ public class LoginServlet extends HttpServlet {
 			req.getSession(true).setAttribute("it.nerdammer.oauthentication.GOOGLE_STATE", state);
 		
 			// Build login callback
-			String loginCallback = CommonUtils.buildCompleteUrl(req, "/nibbiooauth/google_login_callback");
+			String loginCallback = CommonUtils.buildCompleteUrl(req, "/oauthentication/google_login_callback");
 			
 			res.sendRedirect("https://accounts.google.com/o/oauth2/auth" +
 					"?state=" + URLEncoder.encode(state, "UTF-8") +

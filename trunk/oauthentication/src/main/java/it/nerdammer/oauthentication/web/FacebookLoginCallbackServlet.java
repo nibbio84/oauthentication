@@ -68,7 +68,7 @@ public class FacebookLoginCallbackServlet extends HttpServlet {
 		String appSecret = config.getFacebookAppSecret();
 		
 		// Build login callback
-		String loginCallback = CommonUtils.buildCompleteUrl(req, "/nibbiooauth/facebook_login_callback");
+		String loginCallback = CommonUtils.buildCompleteUrl(req, "/oauthentication/facebook_login_callback");
 		
 		if(appId==null || appSecret==null)
 			throw new IllegalStateException("Facebook config not set");
