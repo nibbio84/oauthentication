@@ -11,6 +11,8 @@ class OauthConfig implements Serializable {
 
 	protected OauthProvider defaultProvider;
 	
+	protected String loginProviderChoicePage;
+	
 	protected String loginErrorPage;
 
 	protected String facebookAppID;
@@ -27,6 +29,14 @@ class OauthConfig implements Serializable {
 
 	public void setDefaultProvider(OauthProvider defaultProvider) {
 		this.defaultProvider = defaultProvider;
+	}
+	
+	public String getLoginProviderChoicePage() {
+		return loginProviderChoicePage;
+	}
+	
+	public void setLoginProviderChoicePage(String loginProviderChoicePage) {
+		this.loginProviderChoicePage = loginProviderChoicePage;
 	}
 
 	public String getFacebookAppID() {

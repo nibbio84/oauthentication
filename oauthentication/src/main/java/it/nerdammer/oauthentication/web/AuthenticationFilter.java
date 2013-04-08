@@ -39,7 +39,12 @@ public class AuthenticationFilter implements Filter {
 		CommonUtils.putRequestedUrlInSession(session, url);
 		
 		// User not authenticated
-		req.getRequestDispatcher("/oauthentication/login").forward(req, res);
+		if(CommonUtils.getConfig().getLoginProviderChoicePage()!=null) {
+			req.getRequestDispatcher(CommonUtils.getConfig().getLoginProviderChoicePage()).forward(req, res);
+		} else {
+			req.getRequestDispatcher("/oauthentication/login").forward(req, res);
+		}
+
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -48,9 +53,21 @@ public class AuthenticationFilter implements Filter {
 			Logger.getAnonymousLogger().finer("OauthConfig present, ignoring filter configuration");
 		}
 		
-		String defaultProviderStr = getParameter("DEFAULT_PROVIDER", filterConfig, true);
-		// Get provider or throw IllegalArgumentException
-		OauthProvider defaultProvider = OauthProvider.valueOf(defaultProviderStr.toUpperCase());
+		String defaultProviderStr = getParameter("DEFAULT_PROVIDER", filterConfig, false);
+		OauthProvider defaultProvider = null;
+		if(defaultProviderStr!=null) {
+			defaultProvider = OauthProvider.valueOf(defaultProviderStr.toUpperCase());
+		}
+		
+		String providerChoicePage = getParameter("PROVIDER_CHOICE_PAGE", filterConfig, false);
+		
+		if(defaultProvider==null && providerChoicePage==null) {
+			throw new IllegalStateException("you must provider either a DEFAULT_PROVIDER or a PROVIDER_CHOICE_PAGE parameter");
+		}
+		
+		if(defaultProvider!=null && providerChoicePage!=null) {
+			throw new IllegalStateException("you cannot define both DEFAULT_PROVIDER and PROVIDER_CHOICE_PAGE parameters");
+		}
 		
 		String loginErrorPage = getParameter("LOGIN_ERROR_PAGE", filterConfig, true);
 		
@@ -61,7 +78,7 @@ public class AuthenticationFilter implements Filter {
 		if(facebookConfigPresent && !facebookConfigComplete) {
 			throw new IllegalStateException("facebook config is not complete, parameters: FACEBOOK_APP_ID, FACEBOOK_APP_SECRET");
 		}
-		if(defaultProvider.equals(OauthProvider.FACEBOOK) && !facebookConfigPresent) {
+		if(OauthProvider.FACEBOOK.equals(defaultProvider) && !facebookConfigPresent) {
 			throw new IllegalStateException("default provider configuration is not present: facebook");
 		}
 		
@@ -72,13 +89,14 @@ public class AuthenticationFilter implements Filter {
 		if(googleConfigPresent && !googleConfigComplete) {
 			throw new IllegalStateException("google config is not complete, parameters: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET");
 		}
-		if(defaultProvider.equals(OauthProvider.GOOGLE) && !googleConfigPresent) {
+		if(OauthProvider.GOOGLE.equals(defaultProvider) && !googleConfigPresent) {
 			throw new IllegalStateException("default provider configuration is not present: google");
 		}
 		
 		
 		OauthConfig config = new OauthConfig();
 		config.setDefaultProvider(defaultProvider);
+		config.setLoginProviderChoicePage(providerChoicePage);
 		config.setLoginErrorPage(loginErrorPage);
 		
 		config.setFacebookAppID(facebookAppID);
