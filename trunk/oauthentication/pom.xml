@@ -3,7 +3,7 @@
 
 	<groupId>it.nerdammer</groupId>
 	<artifactId>oauthentication</artifactId>
-	<version>1.0.8-SNAPSHOT</version>
+	<version>1.0.8</version>
 	<packaging>jar</packaging>
 
 	<name>oAuthentication</name>
@@ -18,9 +18,9 @@
 	</licenses>
 	
 	<scm>
-		<connection>scm:svn:http://oauthentication.googlecode.com/svn/tags/oauthentication-1.0.7</connection>
-		<developerConnection>scm:svn:https://oauthentication.googlecode.com/svn/tags/oauthentication-1.0.7</developerConnection>
-		<url>http://oauthentication.googlecode.com/svn/tags/oauthentication-1.0.7</url>
+		<connection>scm:svn:http://oauthentication.googlecode.com/svn/tags/oauthentication-1.0.8</connection>
+		<developerConnection>scm:svn:https://oauthentication.googlecode.com/svn/tags/oauthentication-1.0.8</developerConnection>
+		<url>http://oauthentication.googlecode.com/svn/tags/oauthentication-1.0.8</url>
 	</scm>
 	
 	<developers>
