@@ -39,8 +39,7 @@ public class AuthenticationFilter implements Filter {
 		CommonUtils.putRequestedUrlInSession(session, url);
 		
 		// User not authenticated
-		OauthProvider provider = CommonUtils.getProviderFromCookies((HttpServletRequest)req);
-		if(provider==null && CommonUtils.getConfig().getLoginProviderChoicePage()!=null) {
+		if(CommonUtils.getConfig().getLoginProviderChoicePage()!=null) {
 			req.getRequestDispatcher(CommonUtils.getConfig().getLoginProviderChoicePage()).forward(req, res);
 		} else {
 			req.getRequestDispatcher("/oauthentication/login").forward(req, res);
