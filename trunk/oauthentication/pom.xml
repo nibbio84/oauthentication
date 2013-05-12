@@ -3,7 +3,7 @@
 
 	<groupId>it.nerdammer</groupId>
 	<artifactId>oauthentication</artifactId>
-	<version>1.0.7</version>
+	<version>1.0.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>oAuthentication</name>
