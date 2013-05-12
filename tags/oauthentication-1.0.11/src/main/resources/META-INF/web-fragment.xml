@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-fragment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:webfragment="http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd" metadata-complete="true" version="3.0">
+  <name>oAuthentication</name>
+  <servlet>
+    <servlet-name>oAuthenticationLoginServlet</servlet-name>
+    <servlet-class>it.nerdammer.oauthentication.web.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>oAuthenticationLoginServlet</servlet-name>
+    <url-pattern>/oauthentication/login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>oAuthenticationLogoutServlet</servlet-name>
+    <servlet-class>it.nerdammer.oauthentication.web.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>oAuthenticationLogoutServlet</servlet-name>
+    <url-pattern>/oauthentication/logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>oAuthenticationFacebookLoginCallbackServlet</servlet-name>
+    <servlet-class>it.nerdammer.oauthentication.web.FacebookLoginCallbackServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>oAuthenticationFacebookLoginCallbackServlet</servlet-name>
+    <url-pattern>/oauthentication/facebook_login_callback</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>oAuthenticationGoogleLoginCallbackServlet</servlet-name>
+    <servlet-class>it.nerdammer.oauthentication.web.GoogleLoginCallbackServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>oAuthenticationGoogleLoginCallbackServlet</servlet-name>
+    <url-pattern>/oauthentication/google_login_callback</url-pattern>
+  </servlet-mapping>
+</web-fragment>
