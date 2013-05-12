@@ -18,9 +18,9 @@
 	</licenses>
 	
 	<scm>
-		<connection>scm:svn:http://oauthentication.googlecode.com/svn/tags/oauthentication-1.0.7</connection>
-		<developerConnection>scm:svn:https://oauthentication.googlecode.com/svn/tags/oauthentication-1.0.7</developerConnection>
-		<url>http://oauthentication.googlecode.com/svn/tags/oauthentication-1.0.7</url>
+		<connection>scm:svn:http://oauthentication.googlecode.com/svn/tags/oauthentication</connection>
+		<developerConnection>scm:svn:https://oauthentication.googlecode.com/svn/tags/oauthentication</developerConnection>
+		<url>http://oauthentication.googlecode.com/svn/tags/oauthentication</url>
 	</scm>
 	
 	<developers>
