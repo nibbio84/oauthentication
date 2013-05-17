@@ -71,7 +71,8 @@ public class LoginServlet extends HttpServlet {
 					"&client_id=" + URLEncoder.encode(clientID, "UTF-8") +
 					//"&approval_prompt=force" +
 					"&scope=" + URLEncoder.encode("https://www.googleapis.com/auth/userinfo.email" +
-													" https://www.googleapis.com/auth/userinfo.profile", "UTF-8"));
+													" https://www.googleapis.com/auth/userinfo.profile" +
+													" https://www.googleapis.com/auth/plus.login", "UTF-8"));
 			
 		} else {
 			throw new UnsupportedOperationException("Login for provider " + provider + " not implemented yet");
