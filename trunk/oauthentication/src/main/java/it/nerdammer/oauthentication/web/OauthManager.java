@@ -44,6 +44,8 @@ public class OauthManager {
 		OauthProvider provider = user.getUserID().getProvider();
 		if(provider.equals(OauthProvider.FACEBOOK)) {
 			finder = new FacebookConnectionsFinder();
+		} else if(provider.equals(OauthProvider.GOOGLE)) {
+			finder = new GoogleConnectionsFinder();
 		} else {
 			throw new IllegalArgumentException("Unsupported provider: " + provider);
 		}
