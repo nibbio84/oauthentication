@@ -26,6 +26,14 @@
     <url-pattern>/oauthentication/facebook_login_callback</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>oAuthenticationFacebookLoginCanvasServlet</servlet-name>
+    <servlet-class>it.nerdammer.oauthentication.web.FacebookLoginCanvasServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>oAuthenticationFacebookLoginCanvasServlet</servlet-name>
+    <url-pattern>/oauthentication/facebook_login_canvas</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>oAuthenticationGoogleLoginCallbackServlet</servlet-name>
     <servlet-class>it.nerdammer.oauthentication.web.GoogleLoginCallbackServlet</servlet-class>
   </servlet>

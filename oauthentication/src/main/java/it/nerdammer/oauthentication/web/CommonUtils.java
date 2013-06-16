@@ -1,8 +1,12 @@
 package it.nerdammer.oauthentication.web;
 
+import it.nerdammer.oauthentication.Gender;
 import it.nerdammer.oauthentication.OauthProvider;
 import it.nerdammer.oauthentication.User;
+import it.nerdammer.oauthentication.UserID;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicReference;
@@ -144,6 +148,45 @@ class CommonUtils {
 		}
 		
 		return params;
+	}
+	
+	public static User mapFacebookUser(Map<String, Object> profile, String accessToken, Long expiration) throws UnsupportedEncodingException {
+		String id = (String) profile.get("id");
+		String firstName = (String) profile.get("first_name");
+		String middleName = (String) profile.get("middle_name");
+		String lastName = (String) profile.get("last_name");
+		String nickName = (String) profile.get("username");
+		
+		String genderStr = (String) profile.get("gender");
+		Gender gender = null;
+		for(Gender g : Gender.values()) {
+			if(g.name().equalsIgnoreCase(genderStr)) {
+				gender = g;
+				break;
+			}
+		}
+		
+		String locale = (String) profile.get("locale");
+		String email = (String) profile.get("email");
+		
+		String pictureUrl = "https://graph.facebook.com/" + URLEncoder.encode(id, "UTF-8") + "/picture";
+		
+		// Composizione
+		UserID userId = new UserID(OauthProvider.FACEBOOK, id);
+		User user = new User();
+		user.setUserID(userId);
+		user.setFirstName(firstName);
+		user.setMiddleName(middleName);
+		user.setLastName(lastName);
+		user.setNickName(nickName);
+		user.setGender(gender);
+		user.setEmail(email);
+		user.setLocale(locale);
+		user.setPictureUrl(pictureUrl);
+		user.setAccessToken(accessToken);
+		user.setAccessTokenExpiration(expiration);
+		
+		return user;
 	}
 	
 }
