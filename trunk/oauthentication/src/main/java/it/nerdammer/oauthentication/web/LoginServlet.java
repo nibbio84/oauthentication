@@ -80,5 +80,10 @@ public class LoginServlet extends HttpServlet {
 		
 	}
 	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doGet(req, res);
+	}
+	
 
 }

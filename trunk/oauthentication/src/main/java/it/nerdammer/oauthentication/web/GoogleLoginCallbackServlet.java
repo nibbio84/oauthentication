@@ -124,7 +124,7 @@ public class GoogleLoginCallbackServlet extends HttpServlet {
 		Map<String, Object> profile = mapper2.readValue(inUrl, new TypeReference<Map<String, Object>>() {
 		});
 		
-		conn.disconnect();
+		connUrl.disconnect();
 		
 		Logger.getAnonymousLogger().finer("Google profile: " + profile);
 		
