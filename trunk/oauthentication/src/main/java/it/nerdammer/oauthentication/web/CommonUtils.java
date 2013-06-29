@@ -189,4 +189,8 @@ class CommonUtils {
 		return user;
 	}
 	
+	public static boolean isAjaxRequest(HttpServletRequest request) {
+		return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+	}
+	
 }

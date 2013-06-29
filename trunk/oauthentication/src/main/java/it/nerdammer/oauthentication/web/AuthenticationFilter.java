@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -27,6 +28,11 @@ public class AuthenticationFilter implements Filter {
 		
 		if(user!=null) {
 			chain.doFilter(req, res);
+			return;
+		}
+		
+		if(CommonUtils.isAjaxRequest((HttpServletRequest) req)) {
+			((HttpServletResponse) res).sendError(403, "Protected resource");
 			return;
 		}
 		
