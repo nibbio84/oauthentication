@@ -19,6 +19,8 @@ class OauthConfig implements Serializable {
 
 	protected String facebookAppSecret;
 	
+	protected String facebookCanvasPage;
+	
 	protected String googleClientID;
 	
 	protected String googleClientSecret;
@@ -61,6 +63,14 @@ class OauthConfig implements Serializable {
 
 	public void setFacebookAppSecret(String facebookAppSecret) {
 		this.facebookAppSecret = facebookAppSecret;
+	}
+	
+	public String getFacebookCanvasPage() {
+		return facebookCanvasPage;
+	}
+	
+	public void setFacebookCanvasPage(String facebookCanvasPage) {
+		this.facebookCanvasPage = facebookCanvasPage;
 	}
 
 	public String getGoogleClientID() {

@@ -5,6 +5,8 @@ import it.nerdammer.oauthentication.User;
 import it.nerdammer.oauthentication.UserID;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +64,34 @@ public class OauthManager {
 		} catch(IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public static String buildInviteFriendsLink(HttpServletRequest req, String desiredCallback, String message) {
+		User user = getCurrentUser(req);
+		if(user==null) {
+			throw new IllegalStateException("Not logged in");
+		}
+		
+		if(!user.getUserID().getProvider().equals(OauthProvider.FACEBOOK)) {
+			throw new IllegalStateException("Only Facebook is supported");
+		}
+		
+		String callback;
+		try {
+			if(CommonUtils.isInsideCanvasFromSession(req.getSession(true)) && CommonUtils.getConfig().getFacebookCanvasPage()!=null) {
+				callback = CommonUtils.getConfig().getFacebookCanvasPage();
+				callback = URLEncoder.encode(callback, "UTF-8");
+			} else {
+				callback = CommonUtils.buildCompleteUrl(req, desiredCallback);
+				callback = URLEncoder.encode(callback, "UTF-8");
+			}
+			message = URLEncoder.encode(message, "UTF-8");
+		} catch(UnsupportedEncodingException e) {
+			throw new IllegalStateException(e);
+		}
+		
+		String url = "https://www.facebook.com/dialog/apprequests?app_id=" + CommonUtils.getConfig().getFacebookAppID() + "&redirect_uri=" + callback + "&message=" + message;
+		return url;
 	}
 	
 }

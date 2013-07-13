@@ -24,6 +24,10 @@ public class AuthenticationFilter implements Filter {
 		
 		HttpSession session = ((HttpServletRequest)req).getSession(true);
 		
+		if(CommonUtils.getConfig().getFacebookCanvasPage()!=null && CommonUtils.isFacebookCanvasRequest((HttpServletRequest)req)) {
+			CommonUtils.setInsideCanvasInSession(session, true);
+		}
+		
 		User user = CommonUtils.getUserFromSession(session);
 		
 		if(user!=null) {
@@ -37,14 +41,15 @@ public class AuthenticationFilter implements Filter {
 		}
 		
 		// Get the requested resource
-		String url = ((HttpServletRequest) req).getRequestURL().toString();
-		String query = ((HttpServletRequest) req).getQueryString();
-		if(query!=null) {
-			url += "?" + query;
-		}
-		CommonUtils.putRequestedUrlInSession(session, url);
+		CommonUtils.putRequestedUrlInSession((HttpServletRequest)req, session);
 		
 		// User not authenticated
+		
+		if(CommonUtils.getConfig().getFacebookCanvasPage()!=null && CommonUtils.isFacebookCanvasRequest((HttpServletRequest)req)) {
+			req.getRequestDispatcher("/oauthentication/facebook_login_canvas").forward(req, res);
+			return;
+		}
+		
 		OauthProvider provider = CommonUtils.getProviderFromCookies((HttpServletRequest)req);
 		if(provider==null) {
 			provider = CommonUtils.getProviderFromRequest((HttpServletRequest)req);
@@ -83,10 +88,11 @@ public class AuthenticationFilter implements Filter {
 		
 		String facebookAppID = getParameter("FACEBOOK_APP_ID", filterConfig, false);
 		String facebookAppSecret = getParameter("FACEBOOK_APP_SECRET", filterConfig, false);
+		String facebookCanvasPage = getParameter("FACEBOOK_CANVAS_PAGE", filterConfig, false);
 		boolean facebookConfigPresent = facebookAppID!=null || facebookAppSecret!=null;
 		boolean facebookConfigComplete = facebookAppID!=null && facebookAppSecret!=null;
 		if(facebookConfigPresent && !facebookConfigComplete) {
-			throw new IllegalStateException("facebook config is not complete, parameters: FACEBOOK_APP_ID, FACEBOOK_APP_SECRET");
+			throw new IllegalStateException("facebook config is not complete, parameters: FACEBOOK_APP_ID, FACEBOOK_APP_SECRET. Optional parameters: FACEBOOK_CANVAS_PAGE");
 		}
 		if(OauthProvider.FACEBOOK.equals(defaultProvider) && !facebookConfigPresent) {
 			throw new IllegalStateException("default provider configuration is not present: facebook");
@@ -111,6 +117,7 @@ public class AuthenticationFilter implements Filter {
 		
 		config.setFacebookAppID(facebookAppID);
 		config.setFacebookAppSecret(facebookAppSecret);
+		config.setFacebookCanvasPage(facebookCanvasPage);
 		
 		config.setGoogleClientID(googleClientID);
 		config.setGoogleClientSecret(googleClientSecret);
