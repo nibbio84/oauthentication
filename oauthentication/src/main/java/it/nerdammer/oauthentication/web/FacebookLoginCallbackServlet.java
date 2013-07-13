@@ -124,8 +124,13 @@ public class FacebookLoginCallbackServlet extends HttpServlet {
 		// set the provider cookie 
 		CommonUtils.putProviderAsCookie(req, res, OauthProvider.FACEBOOK);
 				
-		
-		String requestedUrl = CommonUtils.getRequestedUrlFromSession(session);
+		String requestedUrl;
+		if(CommonUtils.isInsideCanvasFromSession(session)) {
+			requestedUrl = CommonUtils.getConfig().getFacebookCanvasPage();
+		} else {
+			requestedUrl = CommonUtils.getRequestedUrlFromSession(session);
+		}
+		 
 		res.sendRedirect(requestedUrl);
 	}
 	

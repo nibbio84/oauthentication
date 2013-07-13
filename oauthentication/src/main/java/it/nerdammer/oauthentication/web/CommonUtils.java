@@ -21,8 +21,10 @@ class CommonUtils {
 	
 	private static final String USER_SESSION_KEY = "it.nerdammer.oauthentication.LOGGED_USER";
 	private static final String REQUESTED_URL_SESSION_KEY = "it.nerdammer.oauthentication.REQUESTED_URL";
+	private static final String INSIDE_CANVAS_SESSION_KEY = "it.nerdammer.oauthentication.INSIDE_CANVAS";
 	private static final String PROVIDER_PARAMETER_KEY = "oauthProvider";
 	private static final String PROVIDER_COOKIE_KEY = "it.nerdammer.oauthentication.OAUTH_PROVIDER";
+	private static final String FACEBOOK_SIGNED_REQUEST_PARAM = "signed_request";
 	
 	private static AtomicReference<OauthConfig> configReference = new AtomicReference<OauthConfig>();
 	
@@ -34,8 +36,25 @@ class CommonUtils {
 		return configReference.get();
 	}
 	
-	public static void putRequestedUrlInSession(HttpSession session, String url) {
+	public static void putRequestedUrlInSession(HttpServletRequest req, HttpSession session) {
+		String url = ((HttpServletRequest) req).getRequestURL().toString();
+		String query = ((HttpServletRequest) req).getQueryString();
+		if(query!=null) {
+			url += "?" + query;
+		}
 		session.setAttribute(REQUESTED_URL_SESSION_KEY, url);
+	}
+	
+	public static void setInsideCanvasInSession(HttpSession session, boolean value) {
+		session.setAttribute(INSIDE_CANVAS_SESSION_KEY, value);
+	}
+	
+	public static boolean isInsideCanvasFromSession(HttpSession session) {
+		Object o = session.getAttribute(INSIDE_CANVAS_SESSION_KEY);
+		if(o==null) {
+			return false;
+		}
+		return ((Boolean) o).booleanValue();
 	}
 	
 	public static String getRequestedUrlFromSession(HttpSession session) {
@@ -187,6 +206,13 @@ class CommonUtils {
 		user.setAccessTokenExpiration(expiration);
 		
 		return user;
+	}
+	
+	public static boolean isFacebookCanvasRequest(HttpServletRequest request) {
+		if(request.getParameter(FACEBOOK_SIGNED_REQUEST_PARAM) != null) {
+			return true;
+		}
+		return false;
 	}
 	
 	public static boolean isAjaxRequest(HttpServletRequest request) {

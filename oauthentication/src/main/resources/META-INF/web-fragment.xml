@@ -34,6 +34,14 @@
     <url-pattern>/oauthentication/facebook_login_canvas</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>oAuthenticationTopRedirector</servlet-name>
+    <servlet-class>it.nerdammer.oauthentication.web.TopRedirectorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>oAuthenticationTopRedirector</servlet-name>
+    <url-pattern>/oauthentication/top_redirector</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>oAuthenticationGoogleLoginCallbackServlet</servlet-name>
     <servlet-class>it.nerdammer.oauthentication.web.GoogleLoginCallbackServlet</servlet-class>
   </servlet>

@@ -11,6 +11,7 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.crypto.Mac;
@@ -40,6 +41,15 @@ public class FacebookLoginCanvasServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
+		Logger logger = Logger.getAnonymousLogger();
+		if(logger.isLoggable(Level.FINER)) {
+			logger.finer("Facebook-Oauth-Canvas. Received canvas request. Printing parameters");
+			Map<String, String[]> pars = req.getParameterMap();
+			for(String p : pars.keySet()) {
+				logger.finer(p + ": " + req.getParameter(p));
+			}
+		}
+		
 		String signedRequest = req.getParameter("signed_request");
 		
 		Logger.getAnonymousLogger().finer("Signed Request: " + signedRequest);
@@ -80,6 +90,15 @@ public class FacebookLoginCanvasServlet extends HttpServlet {
 		});
 		
 		String accessToken = (String)message.get("oauth_token");
+		
+		if(accessToken==null) {
+			logger.info("Access token not found, redirect to login");
+			String reqUrl = CommonUtils.getRequestedUrlFromSession(req.getSession(true));
+			String topRedirector = CommonUtils.buildCompleteUrl(req, "/oauthentication/top_redirector?url=" + URLEncoder.encode(reqUrl, "UTF-8"));
+			res.sendRedirect(topRedirector);
+			return;
+		}
+		
 		Number expires = (Number)message.get("expires");
 		Long expiration = null;
 		if(expires!=null) {
@@ -111,13 +130,9 @@ public class FacebookLoginCanvasServlet extends HttpServlet {
 		// set the provider cookie 
 		CommonUtils.putProviderAsCookie(req, res, OauthProvider.FACEBOOK);
 				
-		String gotoPage = req.getParameter("goto");
-		String requestedUrl = req.getContextPath();
-		if(gotoPage!=null) {
-			requestedUrl += gotoPage;
-		}
+		String gotoPage = CommonUtils.getRequestedUrlFromSession(session);
 		
-		res.sendRedirect(requestedUrl);
+		res.sendRedirect(gotoPage);
 	}
 	
 }
