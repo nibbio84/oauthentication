@@ -66,6 +66,30 @@ public class OauthManager {
 		}
 	}
 	
+	public static String buildShareLink(HttpServletRequest req, String page) {
+		User user = getCurrentUser(req);
+		if(user==null) {
+			throw new IllegalStateException("Not logged in");
+		}
+		
+		if(!user.getUserID().getProvider().equals(OauthProvider.FACEBOOK)) {
+			throw new IllegalStateException("Only Facebook is supported");
+		}
+		
+		String pageUrl = CommonUtils.buildCompleteUrl(req, page);
+		try {
+			pageUrl = URLEncoder.encode(pageUrl, "UTF-8");
+		} catch(UnsupportedEncodingException e) {
+			throw new IllegalStateException(e);
+		}
+		
+		String url = "https://www.facebook.com/sharer/sharer.php?u=" + pageUrl;
+		return url;
+	}
+	
+	
+	
+		
 	public static String buildInviteFriendsLink(HttpServletRequest req, String desiredCallback, String message) {
 		User user = getCurrentUser(req);
 		if(user==null) {
